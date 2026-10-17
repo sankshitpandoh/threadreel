@@ -1,115 +1,77 @@
 ---
-version: alpha
+version: beta
 name: threadreel
-description: A tool that turns a video into string art, for makers and creative coders; it should feel like a clean workbench with a board, pegs and a spool of thread on it.
+description: A tool that turns a video into string art. Maximalist vaporwave — a neon dusk strung from straight chords, with the studio as a glowing desktop program.
 colors:
-  ground: "#f3f3f1"   # the primed board
-  surface: "#ffffff"  # the canvas plate and the source thumbnail
-  ink: "#000000"      # text and the thread; real black, not tinted
-  muted: "#5a5a57"    # secondary text, 6.6:1 on ground
-  pencil: "#c9c9c3"   # guide lines: borders, slider tracks, disabled text
-  signal: "#c81e26"   # the red of a cotton reel; one job: the action and the selected peg
+  void: "#0b0420"     # page background
+  dusk: "#1a0b3d"     # status bars
+  panel: "#24104f"    # window bodies; all reading text sits on this or darker
+  panel-2: "#2d1660"  # secondary buttons, upload tile
+  well: "#05010f"     # code, ledger, choice chips
+  edge: "#3d2475"     # borders and table rules
+  chrome: "#f1ecff"   # body text, 15:1 on panel
+  muted: "#b3a6e0"    # secondary text, 7:1 on panel
+  hot: "#ff2bd6"      # selection, slider thumbs, the horizon (never small text)
+  hot-text: "#ff71ce" # magenta when it is text
+  cyan: "#2de2e6"     # focus ring, values, links
+  sun: "#ffb000"      # defaults, step numbers, stickers
+  violet: "#7b2ff7"   # hard text shadows
+gradients:
+  sun: "linear-gradient(180deg, #ffe259, #ff7a59 48%, #ff2bd6)"   # primary buttons, the sun
+  title: "linear-gradient(90deg, #a3128a, #4b1cb0 55%, #0e6f86)" # window title bars, white text passes on every stop
 typography:
-  display:
-    fontFamily: Archivo
-    fontSize: clamp(40px, 6vw, 72px)
-    fontWeight: 800
-    fontStretch: 72%
-    letterSpacing: -0.02em
-  body:
-    fontFamily: Archivo
-    fontSize: 17px
-    lineHeight: 1.5
-rounded:
-  sm: 2px
-  md: 2px
-  peg: 999px
-spacing:
-  sm: 8px
-  md: 20px
-  lg: 56px
-components:
-  button-primary:
-    backgroundColor: "{colors.signal}"
-    textColor: "{colors.surface}"
-    rounded: "{rounded.sm}"
-    padding: 12px 18px
-  button-secondary:
-    backgroundColor: transparent
-    textColor: "{colors.ink}"
-    border: 1px solid {colors.ink}
-    rounded: "{rounded.sm}"
-    padding: 12px 18px
+  wordmark: Monoton 400, clamp(34px, 7vw, 112px), chrome gradient fill + violet offset copy
+  display: Syncopate 700, uppercase, section titles, steps, stickers, the marquee
+  body: IBM Plex Sans 400/600, 17px / 1.55 (16px on phones)
+  pixel: DotGothic16, window titles, legends, ledger labels, katakana
+  lcd: VT323, every number a reader watches (slider values, ledger, time)
+  code: IBM Plex Mono 14px
 ---
 
 ## Overview
 
 threadreel converts a video into string art: pegs around a frame, one thread, thousands of straight
-lines per frame. Its visitors are makers and creative coders who want to try it on their own clip and
-save the result. The page is the tool first and an explanation second.
+lines per frame. Visitors are people who want a striking clip to post, and creative coders who want
+the engine. The page sells the result in the first screen, then hands over the tool.
 
-The look comes from the string artist's bench, not from "editorial" or "technical": a board primed
-white, pencil guide marks, steel pegs, black cotton thread, and the paper label on a reel of red
-sewing thread. Everything on the page is one of those four things: board, pencil, thread, label.
+The concept: the vaporwave sunset grid already is string art. The floor is threads strung from pegs
+on the horizon to pegs along the bottom edge; the sun is a circular frame of 48 pegs, each strung to
+the peg 17 along. Around that sky the studio and every other block is a window on a 90s desktop.
 
-## Colors
+## Rules
 
-- **Ground (#f3f3f1):** a primed MDF board. Neutral, not cream: the saturation is under 9%.
-- **Surface (#ffffff):** the plate where the picture is strung, and nothing else.
-- **Ink (#000000):** the thread. Also the text. 20:1 on ground. No tinted near-black anywhere.
-- **Muted (#5a5a57):** pencil writing on the board. 6.6:1 on ground.
-- **Pencil (#c9c9c3):** guide lines only: borders, slider tracks, the disabled state. Never text.
-- **Signal (#c81e26):** the red thread on the reel. It has one job: the primary action (Begin, the
-  selected choice, the focus ring, the pegs when they are shown). It is never used for decoration,
-  headings, or a highlighted word.
-
-## Typography
-
-One family, Archivo, used through its width axis the way a spool label uses condensed capitals for
-the number and normal width for the rest.
-
-- Display (wordmark, section titles, the big numbers): Archivo at 72% width, weight 800, tight
-  tracking. Sentence case always.
-- Body (everything else, labels included): Archivo at 100% width, 400 and 600, 17px / 1.5.
-- Numbers that a reader compares (the ledger, the flags table): tabular figures (`tnum`).
-- Code: the platform monospace, only for commands and code. Monospace is never a label.
-
-Scale: 72 / 40 / 24 / 17 / 15. The one loud place is the wordmark.
+- **The art is never touched.** No glow, tint, blend, scanline or filter over the canvas or the
+  example images. Neon lives only in the frame around them.
+- **Text sits on solid panels.** Gradients, grids and the sky carry no reading text. Gradient text is
+  only for the wordmark.
+- **Display faces never carry anything you operate.** Labels, values, prose and the flags table use
+  Plex Sans, Plex Mono or VT323 numerals.
+- **Contrast:** 4.5:1 for text, 3:1 for borders, tracks and the focus ring. Use `hot-text`, not `hot`,
+  for magenta text.
+- **Targets:** 44px minimum (chips, radios, checkboxes, transport button, taskbar links).
+- **Motion:** at most three loops: the floor bands, the marquee, the hero portrait stitching in. All
+  stop under `prefers-reduced-motion`, behind the Pause motion button (remembered per browser), and
+  while a render runs (`body.is-rendering`). Animate transform and opacity only.
 
 ## Layout
 
-A 12-column grid in a 1240px container with 32px gutters (16px under 680px). The one structural
-idea: the studio comes first, full width, the canvas eight columns wide on the left like a board on a
-bench and the controls four columns on the right like the kit's instruction sheet. Below it the
-method is a single reading column (62ch) beside four frames of a real sequence; then the command
-line reference as a spec table; then one paragraph of credits. No hero, no stats strip, no cards.
-
-## Elevation & Depth
-
-Flat. Nothing lifts. The canvas plate has a 1px pencil border and sits on the board; there are no
-shadows, blurs or gradients anywhere.
-
-## Shapes
-
-2px radius on buttons and inputs. Pegs (slider thumbs, radio marks, the drawn pegs) are circles.
-Everything else is square.
+1. Hero: taskbar nav, wordmark, one value line, README.TXT dialog with the trust line, Make yours,
+   and MONALISA.EXE stitching itself in. Stickers in the corners (in a row on phones).
+2. Marquee.
+3. Studio: THREADREEL.EXE (canvas, transport, caption; sticky on desktop) beside SETTINGS.INI in three
+   steps (clip, look, tune, with Thread & detail and Timing folded), STATS.DAT, EXPORT.EXE and the
+   live command line. The Thread it / Stop bar sticks to the bottom of the settings window.
+4. Examples: the 300 / 800 / 1,500 / 2,208 progression as tilted windows, then other looks.
+5. How it works: METHOD.TXT, the second half folded.
+6. For developers: terminal windows with Copy buttons, then FLAGS.CSV (cards on phones).
+7. Footer: one window over a checkerboard floor.
 
 ## Components
 
-- **Header:** wordmark left, one-line description and three links right, a 2px ink rule below.
-- **Buttons:** primary red with white text, secondary ink outline; both 2px radius, 12px 18px,
-  body face 600. Hover darkens the red / fills the outline; focus-visible is a 2px red ring offset 3px.
-- **Sliders:** a 1px ink track (the thread) with a 14px circular thumb, white with a 2px ink ring (a
-  peg head). Label left, value right in tabular 600.
-- **Choice lists (radios):** stacked labels with a 12px circular mark; the checked mark fills red.
-- **Ledger:** two by two, numbers in display face 36px, labels in body 15px muted.
-- **Footer:** a 1px pencil rule and one paragraph.
-
-## Do's and Don'ts
-
-- Do reuse the tokens above unchanged; add a token here before a page uses it.
-- Do keep the signal red for actions and selection only.
-- Don't change: the Archivo family, the red #c81e26, the real black ink.
-- Don't use: SD1 cream and terracotta, SD2 near-black and a neon, SD3 hairlines-and-columns
-  masthead cosplay, SD4 all-caps or mono labels and `·` meta strings, SD5 a coloured headline word,
-  SD6 decorative numerals, CP3 arrow glyphs, I2 emoji icons, dark mode, drop caps, pull quotes.
+- **Window:** `panel` body, 2px bevel (`#7a5ad0` / `#0a0320`), 8px hard black shadow, title bar in the
+  title gradient with DotGothic16 white text and decorative `_ □ ×` (aria-hidden).
+- **Primary button:** sun gradient, `void` text, 4px cyan hard shadow, presses down 3px.
+- **Secondary button:** `panel-2` with a bevel. Disabled: 45% opacity, dashed border, no shadow.
+- **Choices:** chips on `well` with a 2px `edge` border; checked is a `hot` border, tint and glow.
+- **Sliders:** cyan-to-magenta track, white peg thumb with a `hot` ring.
+- **Code:** `well` background, Copy button in the title bar copies the code text only.

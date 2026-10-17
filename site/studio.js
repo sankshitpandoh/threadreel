@@ -217,7 +217,8 @@ async function useSample(sample) {
 
 function setRunning(on) {
   state.running = on;
-  ui.start.textContent = on ? 'Begin again' : 'Begin';
+  document.body.classList.toggle('is-rendering', on);
+  ui.start.textContent = on ? 'Thread it again' : 'Thread it';
   ui.start.disabled = !state.source;
   ui.stop.disabled = !on;
   updateExportButtons();
