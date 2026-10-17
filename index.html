@@ -59,6 +59,13 @@
             </div>
           </div>
 
+          <div class="presets">
+            <span>Set everything like</span>
+            <button type="button" class="link-button" id="preset-reel">the reel</button>
+            <span>(500 pegs, 5,000 lines, white on black, 24 frames a second) or</span>
+            <button type="button" class="link-button" id="preset-default">the defaults</button>
+          </div>
+
           <fieldset class="field">
             <legend>Frame</legend>
             <div class="choice-list" id="shape">
@@ -71,8 +78,8 @@
           <fieldset class="field">
             <legend>Thread</legend>
             <div class="choice-list single" id="thread">
-              <label><input type="radio" name="thread" value="mono-white" checked />Black on white</label>
-              <label><input type="radio" name="thread" value="mono-black" />White on black</label>
+              <label><input type="radio" name="thread" value="mono-white" />Black on white</label>
+              <label><input type="radio" name="thread" value="mono-black" checked />White on black</label>
               <label><input type="radio" name="thread" value="color-white" />Cyan, magenta and yellow on white</label>
               <label><input type="radio" name="thread" value="color-black" />Red, green and blue on black</label>
             </div>
@@ -86,12 +93,12 @@
           <div class="field range">
             <label for="lines">Lines per frame, at most</label>
             <output id="lines-out" for="lines"></output>
-            <input type="range" id="lines" min="200" max="8000" step="100" value="3000" />
+            <input type="range" id="lines" min="200" max="8000" step="100" value="4000" />
           </div>
           <div class="field range">
             <label for="opacity">Thread opacity</label>
             <output id="opacity-out" for="opacity"></output>
-            <input type="range" id="opacity" min="0.05" max="1" step="0.05" value="0.3" />
+            <input type="range" id="opacity" min="0.05" max="1" step="0.05" value="0.1" />
           </div>
           <div class="field range">
             <label for="thickness">Thread thickness</label>
@@ -117,6 +124,9 @@
             <label for="quality">Working resolution</label>
             <output id="quality-out" for="quality"></output>
             <input type="range" id="quality" min="64" max="256" step="32" value="128" />
+          </div>
+          <div class="field check">
+            <label><input type="checkbox" id="all-lines" />Always draw all the lines, instead of stopping when they stop helping</label>
           </div>
           <div class="field check">
             <label><input type="checkbox" id="pegs-visible" />Show the pegs</label>
@@ -224,6 +234,7 @@ const svg = toSVG(result, { width: 1080 });</code></pre>
             <tr><th>-fps <var>n</var></th><td class="default">12</td><td>Frames per second to take from the video.</td></tr>
             <tr><th>-t <var>sec</var></th><td class="default">all</td><td>Use only the first <var>sec</var> seconds.</td></tr>
             <tr><th>-intro, -hold <var>sec</var></th><td class="default">0 / 6, 0 / 2</td><td>Draw the first frame in, hold the last. The second value applies to a still.</td></tr>
+            <tr><th>-all-lines</th><td class="default">off</td><td>Always lay down all <code>-n</code> lines instead of stopping when they stop helping.</td></tr>
             <tr><th>-pegs-visible</th><td class="default">off</td><td>Draw the pegs.</td></tr>
             <tr><th>-j <var>n</var></th><td class="default">all cores</td><td>Worker threads.</td></tr>
             <tr><th>-seed <var>n</var></th><td class="default">random</td><td>Fix the random tie-breaks to repeat a result exactly.</td></tr>
@@ -239,8 +250,8 @@ const svg = toSVG(result, { width: 1080 });</code></pre>
       The search follows <a href="https://github.com/piellardj/image-stylization-threading">Jérémie Piellard's</a> tool for
       still pictures, rewritten for video by <a href="https://github.com/sankshitpandoh">Sankshit Pandoh</a> and published under
       the MIT licence. Video files are written with <a href="https://github.com/Vanilagy/mp4-muxer">mp4-muxer</a> and
-      <a href="https://github.com/Vanilagy/webm-muxer">webm-muxer</a>. Set in Archivo. The sample clip is from <i>Big Buck Bunny</i>,
-      © Blender Foundation, CC BY 3.0; the sample picture is Leonardo's <i>Mona Lisa</i>, in the public domain.</p>
+      <a href="https://github.com/Vanilagy/webm-muxer">webm-muxer</a>. Set in Archivo. The sample clip is the moon shot from Georges Méliès'
+      <i>A Trip to the Moon</i> (1902), and the sample picture is Leonardo's <i>Mona Lisa</i>; both are in the public domain.</p>
     <p><a class="button" href="https://github.com/sankshitpandoh/threadreel">Source on GitHub</a></p>
   </footer>
 

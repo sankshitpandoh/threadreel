@@ -11,9 +11,9 @@ here for moving pictures.
 
 **[Try it in your browser →](https://sankshitpandoh.github.io/threadreel/)**
 
-| Big Buck Bunny, 10 fps | one frame | three colours | white on black, rectangle |
+| Méliès' moon shot, 1902 | one frame | three colours | white on black, rectangle |
 | --- | --- | --- | --- |
-| ![string-art clip](examples/bunny.gif) | ![a frame](examples/bunny-frame.jpg) | ![color](examples/monalisa-color.jpg) | ![black](examples/monalisa-black.jpg) |
+| ![string-art clip](examples/moon.gif) | ![a frame](examples/moon-frame.jpg) | ![color](examples/monalisa-color.jpg) | ![black](examples/monalisa-black.jpg) |
 
 ## How it works
 
@@ -27,6 +27,8 @@ here for moving pictures.
 4. Laying the thread subtracts its weight (opacity × thickness) along the line. A line whose average
    remaining is below half the weight would make the frame worse, so once no line is left above that
    mark, the frame is finished. Bright frames use fewer lines, dark ones more; the line count is a cap.
+   With `exhaust` (`-all-lines`) the search spends the whole budget instead, the way classic string art
+   does: 500 pegs and 5,000 lines on every frame is the look of the reel this started from.
 5. Colour mode keeps three remaining buffers, one per thread (cyan, magenta and yellow on white, or
    red, green and blue on black), and grows the thread that is furthest behind its share.
 6. Frames are independent, so they are solved in parallel in Web Workers or `worker_threads`. The result
@@ -74,6 +76,7 @@ threadreel -i clip.mp4 -o frames/%04d.png -fps 24    # every output frame as a P
 | `-t` | all | use only the first N seconds |
 | `-intro` | 0 / 6 | draw the first frame in over N seconds (6 for a still) |
 | `-hold` | 0 / 2 | hold the last frame for N seconds (2 for a still) |
+| `-all-lines` | off | always lay down all `-n` lines instead of stopping when they stop helping |
 | `-pegs-visible` | off | draw the pegs |
 | `-j` | all cores | worker threads |
 | `-seed` | random | random seed for tie-breaks, for reproducible output |
@@ -130,6 +133,7 @@ Images are plain `{ width, height, data }` objects with RGBA bytes, the same sha
 | `size` | 128 | working resolution |
 | `recent` | 20 | a thread may not return to one of its last N pegs |
 | `minGain` | 0 | stop earlier: require this much more than break-even from a line |
+| `exhaust` | false | never stop early: always lay down all `lines` segments |
 | `seed` | random | PRNG seed for tie-breaks |
 
 ## Design
@@ -146,5 +150,6 @@ npm test
 ## License
 
 MIT. The string-art method is Petros Vrellis's; the greedy search follows Jérémie Piellard's
-image-stylization-threading (GPL-3.0), reimplemented from scratch here. The sample clip is from
-*Big Buck Bunny*, © Blender Foundation, CC BY 3.0. See [LICENSE](LICENSE).
+image-stylization-threading (GPL-3.0), reimplemented from scratch here. The sample clip is the moon
+shot from Georges Méliès' *A Trip to the Moon* (1902), public domain, via Wikimedia Commons. See
+[LICENSE](LICENSE).

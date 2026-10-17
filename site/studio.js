@@ -29,6 +29,9 @@ const ui = {
   elapsed: $('s-time'),
   playIcon: $('play-icon'),
   pegsVisible: $('pegs-visible'),
+  allLines: $('all-lines'),
+  presetReel: $('preset-reel'),
+  presetDefault: $('preset-default'),
 };
 const ranges = ['pegs', 'lines', 'opacity', 'thickness', 'fps', 'duration', 'intro', 'quality', 'size'];
 
@@ -60,8 +63,8 @@ const state = {
 function pickSample() {
   const v = document.createElement('video');
   const mp4 = v.canPlayType('video/mp4; codecs="avc1.42E01E"');
-  const name = mp4 ? 'bunny.mp4' : 'bunny.webm';
-  return { url: new URL(`media/${name}`, import.meta.url), name: 'Big Buck Bunny' };
+  const name = mp4 ? 'moon.mp4' : 'moon.webm';
+  return { url: new URL(`media/${name}`, import.meta.url), name: 'A Trip to the Moon' };
 }
 
 // Sliders show their value next to the label.
@@ -97,7 +100,32 @@ function readSettings() {
     quality: Number($('quality').value),
     size: Number($('size').value),
     showPegs: ui.pegsVisible.checked,
+    exhaust: ui.allLines.checked,
   };
+}
+
+// The settings sliders and choices, as { id: value }.
+const PRESETS = {
+  default: { shape: 'circle', thread: 'mono-black', pegs: 240, lines: 4000, opacity: 0.1, thickness: 1, fps: 12, duration: 10, intro: 0, quality: 128, 'all-lines': false },
+  // The look of the reel that inspired this: 500 pegs, 5,000 lines on every frame, white on black.
+  reel: { shape: 'circle', thread: 'mono-black', pegs: 500, lines: 5000, opacity: 0.05, thickness: 1.2, fps: 24, duration: 18, intro: 0, quality: 160, 'all-lines': true },
+};
+
+function applyPreset(name) {
+  const p = PRESETS[name];
+  for (const [id, value] of Object.entries(p)) {
+    if (id === 'shape' || id === 'thread') {
+      document.querySelector(`input[name="${id}"][value="${value}"]`).checked = true;
+    } else {
+      const input = $(id);
+      if (input.type === 'checkbox') input.checked = value;
+      else {
+        input.value = String(value);
+        input.dispatchEvent(new Event('input'));
+      }
+    }
+  }
+  if (state.source) start();
 }
 
 const setCaption = (text) => (ui.caption.textContent = text);
@@ -271,6 +299,7 @@ async function start() {
     opacity: settings.opacity,
     thickness: settings.thickness,
     size: settings.quality,
+    exhaust: settings.exhaust,
   };
   const pool = frames.length > 1 && WORKERS > 1 ? createWebPool(options, Math.min(WORKERS, frames.length)) : new InlinePool(options);
   state.pool = pool;
@@ -486,6 +515,8 @@ ui.file.addEventListener('change', () => {
 ui.sample.addEventListener('click', () => useSample(SAMPLE_VIDEO));
 ui.sampleImage.addEventListener('click', () => useSample(SAMPLE_IMAGE));
 ui.start.addEventListener('click', start);
+ui.presetReel.addEventListener('click', () => applyPreset('reel'));
+ui.presetDefault.addEventListener('click', () => applyPreset('default'));
 ui.stop.addEventListener('click', stop);
 
 let dragDepth = 0;

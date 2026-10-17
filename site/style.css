@@ -287,6 +287,18 @@ section {
   gap: 8px;
 }
 
+.presets {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--pencil);
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.presets .link-button {
+  font-size: 15px;
+  color: var(--ink);
+}
+
 .link-button {
   appearance: none;
   border: 0;
@@ -765,6 +777,7 @@ pre {
   }
 
   .controls > .source,
+  .controls > .presets,
   .controls > .actions,
   .controls > .ledger,
   .controls > .exports,
