@@ -5,9 +5,6 @@ Turn any video into string art, in JavaScript.
 threadreel hammers a ring of pegs around every frame of a clip, then runs a single thread from peg to
 peg in straight lines, a few thousand times per frame, until the picture appears. Played back, the
 thread moves. It runs in the browser with no build step, as a Node command line tool, and as a library.
-The method follows Petros Vrellis's string-art pieces and Jérémie Piellard's
-[image-stylization-threading](https://github.com/piellardj/image-stylization-threading), reimplemented
-here for moving pictures.
 
 **[Try it in your browser →](https://sankshitpandoh.github.io/threadreel/)**
 
@@ -28,7 +25,7 @@ here for moving pictures.
    remaining is below half the weight would make the frame worse, so once no line is left above that
    mark, the frame is finished. Bright frames use fewer lines, dark ones more; the line count is a cap.
    With `exhaust` (`-all-lines`) the search spends the whole budget instead, the way classic string art
-   does: 500 pegs and 5,000 lines on every frame is the look of the reel this started from.
+   does: 500 pegs and 5,000 lines on every frame gives the dense look of the reel preset.
 5. Colour mode keeps three remaining buffers, one per thread (cyan, magenta and yellow on white, or
    red, green and blue on black), and grows the thread that is furthest behind its share.
 6. Frames are independent, so they are solved in parallel in Web Workers or `worker_threads`. The result
@@ -149,7 +146,6 @@ npm test
 
 ## License
 
-MIT. The string-art method is Petros Vrellis's; the greedy search follows Jérémie Piellard's
-image-stylization-threading (GPL-3.0), reimplemented from scratch here. The sample clip is the moon
+MIT. The sample clip is the moon
 shot from Georges Méliès' *A Trip to the Moon* (1902), public domain, via Wikimedia Commons. See
 [LICENSE](LICENSE).

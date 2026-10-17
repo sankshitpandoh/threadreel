@@ -107,7 +107,7 @@ function readSettings() {
 // The settings sliders and choices, as { id: value }.
 const PRESETS = {
   default: { shape: 'circle', thread: 'mono-black', pegs: 240, lines: 4000, opacity: 0.1, thickness: 1, fps: 12, duration: 10, intro: 0, quality: 128, 'all-lines': false },
-  // The look of the reel that inspired this: 500 pegs, 5,000 lines on every frame, white on black.
+  // The dense reel look: 500 pegs, 5,000 lines on every frame, white on black.
   reel: { shape: 'circle', thread: 'mono-black', pegs: 500, lines: 5000, opacity: 0.05, thickness: 1.2, fps: 24, duration: 18, intro: 0, quality: 160, 'all-lines': true },
 };
 

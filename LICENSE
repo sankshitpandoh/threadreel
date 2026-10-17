@@ -19,9 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-The method follows Jérémie Piellard's image-stylization-threading
-(https://github.com/piellardj/image-stylization-threading, GPL-3.0), reimplemented
-from scratch here, and the string-art technique popularised by Petros Vrellis.

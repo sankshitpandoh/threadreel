@@ -29,8 +29,7 @@
     "video",
     "art",
     "canvas",
-    "webcodecs",
-    "petros-vrellis"
+    "webcodecs"
   ],
   "license": "MIT",
   "dependencies": {
