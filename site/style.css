@@ -122,7 +122,8 @@ output {
 
 .header-nav {
   display: flex;
-  gap: 22px;
+  flex-wrap: wrap;
+  gap: 6px 22px;
   padding-bottom: 6px;
   font-weight: 600;
   font-size: 15px;
@@ -130,6 +131,7 @@ output {
 
 .header-nav a {
   text-decoration: none;
+  white-space: nowrap;
 }
 
 /* Sections ---------------------------------------------------------------- */
@@ -815,7 +817,7 @@ pre {
   }
 
   .header-nav {
-    gap: 16px;
+    gap: 6px 16px;
     padding-bottom: 0;
   }
 
