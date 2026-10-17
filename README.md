@@ -132,6 +132,11 @@ Images are plain `{ width, height, data }` objects with RGBA bytes, the same sha
 | `minGain` | 0 | stop earlier: require this much more than break-even from a line |
 | `seed` | random | PRNG seed for tie-breaks |
 
+## Design
+
+The site follows [DESIGN.md](DESIGN.md): board white, pencil guide lines, black thread, one red
+taken from a cotton reel, and Archivo throughout. Keep new pages and controls on those tokens.
+
 ## Tests
 
 ```bash
