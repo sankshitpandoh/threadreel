@@ -40,6 +40,18 @@ const BOARD_METRES = 0.6; // the board the thread readout assumes
 const PAUSE_PATH = 'M1 1h3.5v10H1zM7.5 1H11v10H7.5z';
 const PLAY_PATH = 'M2 1l9 5-9 5z';
 const WORKERS = Math.max(1, Math.min(8, navigator.hardwareConcurrency || 4));
+// Every worker keeps its own table of rasterised lines, about 14 MB at 240 pegs and
+// 60 MB at 500. Phones (iOS Safari above all) close a tab that holds too much, so
+// the number of workers is set by a memory budget, smaller on touch devices.
+const MOBILE = /iP(hone|ad|od)|Android/.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent));
+const LINE_BUDGET_MB = MOBILE ? 120 : 640;
+
+function workerCount(settings, frameCount) {
+  const pairs = (settings.pegs * (settings.pegs - 1)) / 2;
+  const perWorkerMB = (pairs * settings.quality * 0.75 * 4 * 1.3) / 1e6 + 4;
+  const byMemory = Math.max(1, Math.floor(LINE_BUDGET_MB / perWorkerMB));
+  return Math.min(WORKERS, MOBILE ? 3 : 8, byMemory, frameCount);
+}
 const SAMPLE_VIDEO = pickSample();
 const SAMPLE_IMAGE = { url: new URL('media/monalisa.jpg', import.meta.url), name: 'Mona Lisa' };
 
@@ -302,7 +314,8 @@ async function start() {
     size: settings.quality,
     exhaust: settings.exhaust,
   };
-  const pool = frames.length > 1 && WORKERS > 1 ? createWebPool(options, Math.min(WORKERS, frames.length)) : new InlinePool(options);
+  // Even one worker keeps the page responsive, so phones use a worker rather than the main thread.
+  const pool = frames.length > 1 ? createWebPool(options, workerCount(settings, frames.length)) : new InlinePool(options);
   state.pool = pool;
   state.results = new Array(frames.length).fill(null);
   const t0 = performance.now();

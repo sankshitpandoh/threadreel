@@ -5,31 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>threadreel</title>
   <meta name="description" content="Turn any video into string art, in your browser. One thread, hundreds of pegs, thousands of straight lines on every frame. Nothing is uploaded." />
-  <meta name="theme-color" content="#0b0420" />
+  <meta name="theme-color" content="#f2e9d8" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=Monoton&family=Syncopate:wght@700&family=VT323&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Federant&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site/style.css" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230b0420'/%3E%3Cpath d='M3 9 29 21M2 20 30 12M8 29 24 3M12 3 20 29M4 4l24 24M4 28 28 4' stroke='%23ff2bd6' stroke-width='1.6'/%3E%3C/svg%3E" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f2e9d8'/%3E%3Cpath d='M3 9 29 21M2 20 30 12M8 29 24 3M12 3 20 29M4 4l24 24M4 28 28 4' stroke='%239c3b2f' stroke-width='1.6'/%3E%3C/svg%3E" />
 </head>
 <body>
   <a class="skip" href="#studio">Skip to the studio</a>
 
   <header class="hero">
-    <div class="sky deco" aria-hidden="true">
-      <div class="sun">
-        <svg viewBox="0 0 200 200" class="sun-chords" id="sun-chords"></svg>
-      </div>
-      <div class="horizon"></div>
-      <div class="floor-wrap">
-        <div class="bands"></div>
-        <svg class="floor" id="floor" viewBox="0 0 1200 400" preserveAspectRatio="none"></svg>
-      </div>
-    </div>
-
-    <nav class="taskbar" aria-label="Sections">
-      <a class="start-chip" href="./"><span class="start-mark" aria-hidden="true"></span>threadreel</a>
-      <div class="taskbar-links">
+    <nav class="topnav wrap" aria-label="Sections">
+      <a class="brand" href="./">threadreel</a>
+      <div class="topnav-links">
         <a href="#studio">Make one</a>
         <a href="#examples">Examples</a>
         <a href="#method">How it works</a>
@@ -39,62 +28,49 @@
       <button type="button" class="motion-toggle" id="motion-toggle" aria-pressed="false">Pause motion</button>
     </nav>
 
-    <div class="hero-inner">
+    <div class="hero-inner wrap">
       <div class="hero-copy">
-        <h1 class="wordmark" data-text="threadreel">threadreel</h1>
-        <p class="lede">Turn any video into string art.</p>
-        <div class="dialog window">
-          <div class="titlebar"><span>README.TXT</span><span class="tb-buttons" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></div>
-          <p>One thread, hundreds of pegs, thousands of straight lines on every frame. It runs in your
-            browser, on your phone too, and <strong>nothing is uploaded</strong>.</p>
+        <div class="title-block">
+          <svg class="halo orn" viewBox="0 0 200 200" aria-hidden="true"><use href="#orn-halo" /></svg>
+          <h1 class="wordmark">threadreel</h1>
         </div>
+        <p class="lede">Turn any video into string art.</p>
+        <p class="hero-text">One thread, hundreds of pegs, thousands of straight lines on every frame. It runs in your
+          browser, on your phone too, and <strong>nothing is uploaded</strong>.</p>
         <div class="hero-actions">
           <a class="button primary big" href="#studio">Make yours</a>
           <a class="button" href="#examples">See it stitch a face</a>
         </div>
       </div>
 
-      <figure class="window showcase">
-        <div class="titlebar"><span>MONALISA.EXE</span><span class="tb-buttons" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></div>
-        <div class="showcase-well">
-          <img src="examples/monalisa-300.jpg" alt="" />
-          <img src="examples/monalisa-800.jpg" alt="" />
-          <img src="examples/monalisa-1500.jpg" alt="" />
-          <img src="examples/monalisa.jpg" alt="The Mona Lisa, strung from about 2,200 straight lines of black thread" />
+      <figure class="showcase">
+        <div class="arch-mount small">
+          <svg class="tympanum orn" viewBox="0 0 200 64" aria-hidden="true"><use href="#orn-arch" /></svg>
+          <div class="showcase-well">
+            <img src="examples/monalisa-300.jpg" alt="" />
+            <img src="examples/monalisa-800.jpg" alt="" />
+            <img src="examples/monalisa-1500.jpg" alt="" />
+            <img src="examples/monalisa.jpg" alt="The Mona Lisa, strung from about 2,200 straight lines of black thread" />
+          </div>
         </div>
-        <figcaption class="statusbar"><span class="count" aria-hidden="true"></span><span>one thread, peg to peg</span></figcaption>
+        <figcaption><span class="count" aria-hidden="true"></span> · one thread, peg to peg</figcaption>
       </figure>
     </div>
-
-    <ul class="stickers" aria-label="Facts">
-      <li class="sticker s1">Nothing uploaded</li>
-      <li class="sticker s2">100% browser</li>
-      <li class="sticker s3">Free &amp; MIT</li>
-    </ul>
   </header>
 
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
-      <span>500 pegs ✦ one thread ✦ 5,000 lines a frame ✦ nothing uploaded ✦ スレッドリール ✦ video in, string art out ✦ </span>
-      <span>500 pegs ✦ one thread ✦ 5,000 lines a frame ✦ nothing uploaded ✦ スレッドリール ✦ video in, string art out ✦ </span>
-    </div>
-    <div class="marquee-track rev">
-      <span>糸 ✦ peg to peg ✦ circle ✦ ellipse ✦ rectangle ✦ PNG ✦ SVG ✦ MP4 ✦ runs on your phone ✦ 釘 ✦ </span>
-      <span>糸 ✦ peg to peg ✦ circle ✦ ellipse ✦ rectangle ✦ PNG ✦ SVG ✦ MP4 ✦ runs on your phone ✦ 釘 ✦ </span>
-    </div>
-  </div>
+  <svg class="divider orn" viewBox="0 0 240 40" aria-hidden="true"><use href="#orn-leaf" /></svg>
 
   <main>
     <section id="studio" class="studio wrap" aria-labelledby="studio-title">
       <div class="section-head">
-        <span class="kana" aria-hidden="true">スタジオ</span>
         <h2 id="studio-title" class="section-title" data-text="Make yours">Make yours</h2>
         <p class="section-sub">Pick a clip, pick a look, press <b>Thread it</b>. The sample is already running.</p>
       </div>
 
       <div class="studio-grid">
-        <div class="window plate-window">
-          <div class="titlebar"><span>THREADREEL.EXE — preview</span><span class="tb-buttons" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></div>
+        <div class="frame plate-panel">
+          <div class="arch-mount">
+            <svg class="tympanum orn" viewBox="0 0 200 64" aria-hidden="true"><use href="#orn-arch" /></svg>
           <figure class="plate" id="plate">
             <div class="plate-frame" id="drop">
               <canvas id="canvas" width="720" height="720" role="img" aria-label="The strung picture"></canvas>
@@ -109,12 +85,13 @@
             </div>
             <figcaption class="statusbar" id="caption" role="status">Fetching the sample clip.</figcaption>
           </figure>
+          </div>
         </div>
 
         <aside class="controls" aria-label="Settings">
-          <div class="window">
-            <div class="titlebar"><span>SETTINGS.INI</span><span class="tb-buttons" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></div>
-            <div class="window-body">
+          <div class="frame">
+            <div class="plaque"><span>Settings</span></div>
+            <div class="frame-body">
 
               <h3 class="step"><span class="step-n" aria-hidden="true">01</span>Pick a clip</h3>
               <div class="source">
@@ -230,9 +207,9 @@
             </div>
           </div>
 
-          <div class="window">
-            <div class="titlebar"><span>EXPORT.EXE</span><span class="tb-buttons" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></div>
-            <div class="window-body">
+          <div class="frame">
+            <div class="plaque"><span>Save</span></div>
+            <div class="frame-body">
               <div class="field range export-size">
                 <label for="size">Video size</label>
                 <output id="size-out" for="size"></output>
@@ -248,12 +225,12 @@
             </div>
           </div>
 
-          <div class="window term">
-            <div class="titlebar"><span>Same thing on the command line</span><button type="button" class="copy" data-copy="cli-cmd">Copy</button></div>
+          <div class="frame term">
+            <div class="plaque"><span>Same thing on the command line</span><button type="button" class="copy" data-copy="cli-cmd">Copy</button></div>
             <pre><code id="cli-cmd">threadreel -i clip.mp4 -o clip-threads.mp4</code></pre>
           </div>
-          <div class="window lcd-window">
-            <div class="titlebar"><span>STATS.DAT</span><span class="tb-buttons" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></div>
+          <div class="frame ledger-panel">
+            <div class="plaque"><span>Ledger</span></div>
             <dl class="ledger">
               <div><dt>Frames</dt><dd id="s-frames">0</dd></div>
               <div><dt>Lines / frame</dt><dd id="s-lines">–</dd></div>
@@ -269,32 +246,32 @@
 
     <section id="examples" class="examples wrap" aria-labelledby="examples-title">
       <div class="section-head">
-        <span class="kana" aria-hidden="true">ギャラリー</span>
         <h2 id="examples-title" class="section-title" data-text="From 300 lines to a face">From 300 lines to a face</h2>
         <p class="section-sub">The first lines carve out the darkest masses. The face only settles once the thread has nowhere large left to go.</p>
       </div>
       <div class="progression">
-        <figure class="window"><div class="titlebar"><span>0300.JPG</span></div><img src="examples/monalisa-300.jpg" alt="The Mona Lisa after 300 lines of thread" loading="lazy" /><figcaption><b>300</b> lines</figcaption></figure>
-        <figure class="window"><div class="titlebar"><span>0800.JPG</span></div><img src="examples/monalisa-800.jpg" alt="The Mona Lisa after 800 lines of thread" loading="lazy" /><figcaption><b>800</b> lines</figcaption></figure>
-        <figure class="window"><div class="titlebar"><span>1500.JPG</span></div><img src="examples/monalisa-1500.jpg" alt="The Mona Lisa after 1500 lines of thread" loading="lazy" /><figcaption><b>1,500</b> lines</figcaption></figure>
-        <figure class="window"><div class="titlebar"><span>2208.JPG</span></div><img src="examples/monalisa.jpg" alt="The Mona Lisa when the search stops, about 2200 lines" loading="lazy" /><figcaption><b>2,208</b> lines, where it stopped by itself</figcaption></figure>
+        <figure class="mat"><img src="examples/monalisa-300.jpg" alt="The Mona Lisa after 300 lines of thread" loading="lazy" /><figcaption><b>300</b> lines</figcaption></figure>
+        <figure class="mat"><img src="examples/monalisa-800.jpg" alt="The Mona Lisa after 800 lines of thread" loading="lazy" /><figcaption><b>800</b> lines</figcaption></figure>
+        <figure class="mat"><img src="examples/monalisa-1500.jpg" alt="The Mona Lisa after 1500 lines of thread" loading="lazy" /><figcaption><b>1,500</b> lines</figcaption></figure>
+        <figure class="mat"><img src="examples/monalisa.jpg" alt="The Mona Lisa when the search stops, about 2200 lines" loading="lazy" /><figcaption><b>2,208</b> lines, where it stopped by itself</figcaption></figure>
       </div>
       <h3 class="sub-title">Other looks</h3>
       <div class="looks">
-        <figure class="window"><div class="titlebar"><span>MOON.MP4 — one frame</span></div><img src="examples/moon-frame.jpg" alt="One frame of the moon shot from A Trip to the Moon in white thread on black" loading="lazy" /><figcaption>White on black, from a 1902 film</figcaption></figure>
-        <figure class="window"><div class="titlebar"><span>CMY.JPG</span></div><img src="examples/monalisa-color.jpg" alt="The Mona Lisa in cyan, magenta and yellow thread on white" loading="lazy" /><figcaption>Three threads: cyan, magenta, yellow</figcaption></figure>
-        <figure class="window"><div class="titlebar"><span>NIGHT.JPG</span></div><img src="examples/monalisa-black.jpg" alt="The Mona Lisa in white thread on black inside a rectangle" loading="lazy" /><figcaption>White on black, rectangle frame</figcaption></figure>
+        <figure class="mat"><img src="examples/moon-frame.jpg" alt="One frame of the moon shot from A Trip to the Moon in white thread on black" loading="lazy" /><figcaption>White on black, from a 1902 film</figcaption></figure>
+        <figure class="mat"><img src="examples/monalisa-color.jpg" alt="The Mona Lisa in cyan, magenta and yellow thread on white" loading="lazy" /><figcaption>Three threads: cyan, magenta, yellow</figcaption></figure>
+        <figure class="mat"><img src="examples/monalisa-black.jpg" alt="The Mona Lisa in white thread on black inside a rectangle" loading="lazy" /><figcaption>White on black, rectangle frame</figcaption></figure>
       </div>
     </section>
 
+    <svg class="divider orn" viewBox="0 0 240 40" aria-hidden="true"><use href="#orn-leaf" /></svg>
+
     <section id="method" class="method wrap" aria-labelledby="method-title">
       <div class="section-head">
-        <span class="kana" aria-hidden="true">仕組み</span>
         <h2 id="method-title" class="section-title" data-text="How it works">How it works</h2>
       </div>
-      <div class="window prose-window">
-        <div class="titlebar"><span>METHOD.TXT</span><span class="tb-buttons" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></div>
-        <div class="window-body prose">
+      <div class="frame prose-frame">
+        <div class="plaque"><span>The method</span></div>
+        <div class="frame-body prose">
           <p>A string artist has only one move: run the thread from the peg they are at to some other peg, in a
             straight line. threadreel plays that game greedily. It keeps a small copy of the frame in which every
             pixel records how much darker it still needs to be. From the current peg it considers every other
@@ -322,15 +299,14 @@
 
     <section id="developers" class="reference wrap" aria-labelledby="dev-title">
       <div class="section-head">
-        <span class="kana" aria-hidden="true">コマンド</span>
         <h2 id="dev-title" class="section-title" data-text="For developers">For developers</h2>
         <p class="section-sub">The same engine runs as a Node command line tool and as a library. It is not on npm yet: install it from GitHub.
           Node 18 or newer; ffmpeg on the PATH for video files.</p>
       </div>
 
       <div class="term-grid">
-        <div class="window term">
-          <div class="titlebar"><span>Install the command</span><button type="button" class="copy" data-copy="code-install">Copy</button></div>
+        <div class="frame term">
+          <div class="plaque"><span>Install the command</span><button type="button" class="copy" data-copy="code-install">Copy</button></div>
 <pre><code id="code-install">git clone https://github.com/sankshitpandoh/threadreel
 cd threadreel &amp;&amp; npm install &amp;&amp; npm link
 
@@ -338,20 +314,20 @@ threadreel -i clip.mp4 -o clip-threads.mp4
 threadreel -i photo.jpg -o photo.svg</code></pre>
         </div>
 
-        <div class="window term">
-          <div class="titlebar"><span>A still that draws itself</span><button type="button" class="copy" data-copy="code-still">Copy</button></div>
+        <div class="frame term">
+          <div class="plaque"><span>A still that draws itself</span><button type="button" class="copy" data-copy="code-still">Copy</button></div>
 <pre><code id="code-still">threadreel -i photo.jpg -o photo.mp4 -intro 8 -hold 3</code></pre>
           <p class="term-note">Give a picture and ask for a video: the thread is laid down one line at a time, then held.</p>
         </div>
 
-        <div class="window term">
-          <div class="titlebar"><span>Add it to your project</span><button type="button" class="copy" data-copy="code-dep">Copy</button></div>
+        <div class="frame term">
+          <div class="plaque"><span>Add it to your project</span><button type="button" class="copy" data-copy="code-dep">Copy</button></div>
 <pre><code id="code-dep">npm install github:sankshitpandoh/threadreel</code></pre>
           <p class="term-note">Or, after <code>npm link</code> in the clone above, run <code>npm link threadreel</code> in your project.</p>
         </div>
 
-        <div class="window term">
-          <div class="titlebar"><span>As a library</span><button type="button" class="copy" data-copy="code-lib">Copy</button></div>
+        <div class="frame term">
+          <div class="plaque"><span>As a library</span><button type="button" class="copy" data-copy="code-lib">Copy</button></div>
 <pre><code id="code-lib">import { Threader, rasterize, toSVG } from 'threadreel';
 
 const threader = new Threader({ shape: 'circle', pegs: 240 });
@@ -360,8 +336,8 @@ const png = rasterize(result, { width: 1080 });
 const svg = toSVG(result, { width: 1080 });</code></pre>
         </div>
 
-        <div class="window term wide">
-          <div class="titlebar"><span>Line by line, in a p5.js sketch</span><button type="button" class="copy" data-copy="code-p5">Copy</button></div>
+        <div class="frame term wide">
+          <div class="plaque"><span>Line by line, in a p5.js sketch</span><button type="button" class="copy" data-copy="code-p5">Copy</button></div>
 <pre><code id="code-p5">import { Threader, drawResult } from 'threadreel';
 
 const threader = new Threader({ pegs: 240, background: 'black' });
@@ -377,8 +353,8 @@ function draw() {
         </div>
       </div>
 
-      <div class="window flags-window">
-        <div class="titlebar"><span>FLAGS.CSV</span><span class="tb-buttons" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></div>
+      <div class="frame flags-frame">
+        <div class="plaque"><span>Every flag</span></div>
         <table class="flags">
           <thead><tr><th scope="col">Flag</th><th scope="col">Default</th><th scope="col">What it does</th></tr></thead>
           <tbody>
@@ -409,7 +385,7 @@ function draw() {
   </main>
 
   <footer class="footer">
-    <div class="footer-floor deco" aria-hidden="true"></div>
+    <svg class="fan orn" viewBox="0 0 400 60" preserveAspectRatio="none" aria-hidden="true"><use href="#orn-fan" /></svg>
     <div class="wrap footer-inner">
       <p class="footer-mark" aria-hidden="true">threadreel</p>
       <p>Made by <a href="https://github.com/sankshitpandoh">Sankshit Pandoh</a> and published under the MIT licence.

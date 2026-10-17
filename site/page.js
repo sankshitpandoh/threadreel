@@ -1,53 +1,113 @@
-// Page extras around the studio: the strung sun and floor, the motion switch,
+// Page extras around the studio: the strung ornaments, the motion switch,
 // copy buttons on code, and the command line that matches the settings.
+//
+// Every ornament is straight chords between pegs; the curves are where the
+// chords pile up. Each is built once as an SVG <symbol>, one path per symbol,
+// and reused with <use>, so the page stays light.
 
 const SVG = 'http://www.w3.org/2000/svg';
+const f = (n) => n.toFixed(1);
 
-function line(parent, x1, y1, x2, y2, cls) {
-  const l = document.createElementNS(SVG, 'line');
-  l.setAttribute('x1', x1.toFixed(1));
-  l.setAttribute('y1', y1.toFixed(1));
-  l.setAttribute('x2', x2.toFixed(1));
-  l.setAttribute('y2', y2.toFixed(1));
-  if (cls) l.setAttribute('class', cls);
-  parent.appendChild(l);
+function chords(pairs) {
+  return pairs.map(([[x1, y1], [x2, y2]]) => `M${f(x1)} ${f(y1)}L${f(x2)} ${f(y2)}`).join('');
 }
 
-// The sun is a circular string frame: 48 pegs, each strung to the peg 17 along.
-function stringSun(svg) {
-  const n = 48;
-  const peg = (i) => {
-    const a = (i / n) * Math.PI * 2 - Math.PI / 2;
-    return [100 + 98 * Math.cos(a), 100 + 98 * Math.sin(a)];
-  };
+function dots(points, r) {
+  return points.map(([x, y]) => `M${f(x - r)} ${f(y)}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0`).join('');
+}
+
+// A curve stitch: n chords from leg a to leg b, a[i] to b[i], drawing the
+// quadratic curve from p0 to p1 that bows towards c.
+function stitch(p0, c, p1, n) {
+  const pairs = [];
+  for (let i = 0; i <= n; i++) {
+    const t = i / n;
+    const a = [p0[0] + (c[0] - p0[0]) * t, p0[1] + (c[1] - p0[1]) * t];
+    const b = [c[0] + (p1[0] - c[0]) * t, c[1] + (p1[1] - c[1]) * t];
+    pairs.push([a, b]);
+  }
+  return pairs;
+}
+
+function ring(n, cx, cy, r, from = 0, to = Math.PI * 2) {
+  const closed = to - from >= Math.PI * 2 - 1e-6;
+  const pts = [];
   for (let i = 0; i < n; i++) {
-    const [x1, y1] = peg(i);
-    const [x2, y2] = peg(i + 17);
-    line(svg, x1, y1, x2, y2);
+    const a = from + ((to - from) * i) / (closed ? n : n - 1);
+    pts.push([cx + r * Math.cos(a), cy + r * Math.sin(a)]);
   }
+  return pts;
 }
 
-// The floor is threads from pegs on the horizon to pegs along the bottom edge,
-// each horizon peg strung straight down and to its neighbours' far pegs.
-function stringFloor(svg) {
-  const top = 25;
-  const bottomSpan = 3.2; // the bottom row is wider than the screen
-  for (let i = 0; i <= top; i++) {
-    const t = i / top;
-    const x = t * 1200;
-    const xb = 600 + (t - 0.5) * 1200 * bottomSpan;
-    line(svg, x, 0, xb, 400, i % 5 === 0 ? 'hot' : '');
-    if (i < top) {
-      const xn = 600 + ((i + 1) / top - 0.5) * 1200 * bottomSpan;
-      line(svg, x, 0, xn, 400);
+// The arch over the plate: 49 pegs on a flattened half ellipse, each strung
+// 11 along, so the chords lay a second, inner arch of their own.
+function arch() {
+  const pegs = [];
+  const n = 49;
+  for (let i = 0; i < n; i++) {
+    const a = Math.PI + (Math.PI * i) / (n - 1);
+    pegs.push([100 + 96 * Math.cos(a), 62 + 58 * Math.sin(a)]);
+  }
+  const pairs = [];
+  for (let i = 0; i + 11 < n; i++) pairs.push([pegs[i], pegs[i + 11]]);
+  return { d: chords(pairs), dots: dots(pegs, 1.1) };
+}
+
+// The halo behind the wordmark: 36 pegs, each strung to the one 13 along.
+function halo() {
+  const pegs = ring(36, 100, 100, 96);
+  const pairs = pegs.map((p, i) => [p, pegs[(i + 13) % pegs.length]]);
+  return { d: chords(pairs), dots: dots(pegs, 1.4) };
+}
+
+// Three leaves on a stem: each leaf two mirrored curve stitches.
+function leaf() {
+  const pairs = [[[4, 20], [236, 20]]];
+  const leafAt = (x0, x1, h, n) => {
+    const mid = (x0 + x1) / 2;
+    pairs.push(...stitch([x0, 20], [mid, 20 - h], [x1, 20], n), ...stitch([x0, 20], [mid, 20 + h], [x1, 20], n));
+  };
+  leafAt(30, 88, 9, 8);
+  leafAt(84, 156, 15, 11);
+  leafAt(152, 210, 9, 8);
+  return { d: chords(pairs), dots: dots([[4, 20], [236, 20], [120, 5], [120, 35]], 1.6) };
+}
+
+// The fan over the footer: two rows of pegs strung across each other.
+function fan() {
+  const n = 24;
+  const top = Array.from({ length: n }, (_, i) => [(400 * i) / (n - 1), 0]);
+  const bottom = Array.from({ length: n }, (_, i) => [(400 * i) / (n - 1), 60]);
+  const pairs = top.map((p, i) => [p, bottom[n - 1 - i]]);
+  for (let i = 0; i < n; i += 3) pairs.push([top[i], bottom[i]]);
+  return { d: chords(pairs), dots: '' };
+}
+
+function buildSprite() {
+  const sprite = document.createElementNS(SVG, 'svg');
+  sprite.setAttribute('aria-hidden', 'true');
+  sprite.setAttribute('class', 'sprite');
+  const symbols = { 'orn-arch': [arch(), '0 0 200 64'], 'orn-halo': [halo(), '0 0 200 200'], 'orn-leaf': [leaf(), '0 0 240 40'], 'orn-fan': [fan(), '0 0 400 60'] };
+  for (const [id, [shape, box]] of Object.entries(symbols)) {
+    const symbol = document.createElementNS(SVG, 'symbol');
+    symbol.id = id;
+    symbol.setAttribute('viewBox', box);
+    const path = document.createElementNS(SVG, 'path');
+    path.setAttribute('d', shape.d);
+    path.setAttribute('class', 'orn-thread');
+    symbol.appendChild(path);
+    if (shape.dots) {
+      const pegs = document.createElementNS(SVG, 'path');
+      pegs.setAttribute('d', shape.dots);
+      pegs.setAttribute('class', 'orn-peg');
+      symbol.appendChild(pegs);
     }
+    sprite.appendChild(symbol);
   }
+  document.body.prepend(sprite);
 }
 
-const sun = document.getElementById('sun-chords');
-const floor = document.getElementById('floor');
-if (sun) stringSun(sun);
-if (floor) stringFloor(floor);
+buildSprite();
 
 // Motion switch. Remembered per browser; reduced-motion users never see motion.
 const toggle = document.getElementById('motion-toggle');

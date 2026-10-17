@@ -1,31 +1,26 @@
 ---
-version: beta
+version: gamma
 name: threadreel
-description: A tool that turns a video into string art. Maximalist vaporwave — a neon dusk strung from straight chords, with the studio as a glowing desktop program.
+description: A tool that turns a video into string art. Art Nouveau strung from straight chords — Mucha by way of a string artist.
 colors:
-  void: "#0b0420"     # page background
-  dusk: "#1a0b3d"     # status bars
-  panel: "#24104f"    # window bodies; all reading text sits on this or darker
-  panel-2: "#2d1660"  # secondary buttons, upload tile
-  well: "#05010f"     # code, ledger, choice chips
-  edge: "#3d2475"     # borders and table rules
-  chrome: "#f1ecff"   # body text, 15:1 on panel
-  muted: "#b3a6e0"    # secondary text, 7:1 on panel
-  hot: "#ff2bd6"      # selection, slider thumbs, the horizon (never small text)
-  hot-text: "#ff71ce" # magenta when it is text
-  cyan: "#2de2e6"     # focus ring, values, links
-  sun: "#ffb000"      # defaults, step numbers, stickers
-  violet: "#7b2ff7"   # hard text shadows
-gradients:
-  sun: "linear-gradient(180deg, #ffe259, #ff7a59 48%, #ff2bd6)"   # primary buttons, the sun
-  title: "linear-gradient(90deg, #a3128a, #4b1cb0 55%, #0e6f86)" # window title bars, white text passes on every stop
+  parchment: "#f2e9d8"  # page ground
+  vellum: "#fbf6ec"     # frames and cards
+  ink: "#2b2118"        # text, 13:1 on parchment
+  muted: "#5e4b3a"      # secondary text, 7:1
+  gilt: "#a87b2c"       # ornament and rules only (3.3:1, never text)
+  gilt-text: "#7a5418"  # gold-coloured text, 5.6:1
+  sage: "#4f6b4a"       # selected chips; white on sage 5.9:1
+  sage-ink: "#3e5a3a"   # links, flag names
+  madder: "#9c3b2f"     # the primary action, focus ring, slider pegs; vellum on madder 6.6:1
+  forest: "#1f2a24"     # developer band and footer
+  cream: "#efe6d2"      # text on forest and on the mount, 13:1
+  gilt-light: "#d4a849" # ornament and accents on dark grounds, 7:1 on forest
+  mount: "#1d1712"      # the arched mat around the canvas (the canvas itself stays #000)
 typography:
-  wordmark: Monoton 400, clamp(34px, 7vw, 112px), chrome gradient fill + violet offset copy
-  display: Syncopate 700, uppercase, section titles, steps, stickers, the marquee
-  body: IBM Plex Sans 400/600, 17px / 1.55 (16px on phones)
-  pixel: DotGothic16, window titles, legends, ledger labels, katakana
-  lcd: VT323, every number a reader watches (slider values, ledger, time)
-  code: IBM Plex Mono 14px
+  display: Federant — wordmark, section titles, preset names, step numerals, drop cap
+  body: Fraunces — everything else; italic for the lede and captions; 18px / 1.6 (17px on phones)
+  numerals: Fraunces 600, lining tabular figures (ledger, slider values)
+  code: Courier Prime
 ---
 
 ## Overview
@@ -34,44 +29,43 @@ threadreel converts a video into string art: pegs around a frame, one thread, th
 lines per frame. Visitors are people who want a striking clip to post, and creative coders who want
 the engine. The page sells the result in the first screen, then hands over the tool.
 
-The concept: the vaporwave sunset grid already is string art. The floor is threads strung from pegs
-on the horizon to pegs along the bottom edge; the sun is a circular frame of 48 pegs, each strung to
-the peg 17 along. Around that sky the studio and every other block is a window on a 90s desktop.
+The concept: string art can only draw straight chords, yet curves appear where the chords pile up.
+That curve is Art Nouveau's whiplash line, so every ornament is strung from straight chords between
+pegs — the arch over the plate, the halo behind the wordmark, the leaf dividers, the frame corners and
+the fan over the footer. `site/page.js` builds them once as SVG symbols (one path each) and reuses
+them with `<use>`; the frame corner is a static data-URI in the stylesheet.
 
 ## Rules
 
-- **The art is never touched.** No glow, tint, blend, scanline or filter over the canvas or the
-  example images. Neon lives only in the frame around them.
-- **Text sits on solid panels.** Gradients, grids and the sky carry no reading text. Gradient text is
-  only for the wordmark.
-- **Display faces never carry anything you operate.** Labels, values, prose and the flags table use
-  Plex Sans, Plex Mono or VT323 numerals.
-- **Contrast:** 4.5:1 for text, 3:1 for borders, tracks and the focus ring. Use `hot-text`, not `hot`,
-  for magenta text.
-- **Targets:** 44px minimum (chips, radios, checkboxes, transport button, taskbar links).
-- **Motion:** at most three loops: the floor bands, the marquee, the hero portrait stitching in. All
-  stop under `prefers-reduced-motion`, behind the Pause motion button (remembered per browser), and
-  while a render runs (`body.is-rendering`). Animate transform and opacity only.
+- **The art is never touched.** Nothing is drawn over the canvas or the example images.
+- **No ornament behind text.** Gilt is never a text colour; use `gilt-text`.
+- **Contrast:** 4.5:1 for text, 3:1 for borders and the focus ring.
+- **Targets:** 44px minimum.
+- **Light on phones.** No `position: fixed` backgrounds, masks, filters, `backdrop-filter` or
+  `will-change`. Ornaments stay a few hundred path segments in total. The studio caps its workers by
+  a memory budget (smaller on touch devices), because every worker keeps its own line table.
+- **Motion:** only the hero portrait stitching itself in. It stops under `prefers-reduced-motion`
+  and behind the Pause motion button (remembered per browser).
 
 ## Layout
 
-1. Hero: taskbar nav, wordmark, one value line, README.TXT dialog with the trust line, Make yours,
-   and MONALISA.EXE stitching itself in. Stickers in the corners (in a row on phones).
-2. Marquee.
-3. Studio: THREADREEL.EXE (canvas, transport, caption; sticky on desktop) beside SETTINGS.INI in three
-   steps (clip, look, tune, with Thread & detail and Timing folded), STATS.DAT, EXPORT.EXE and the
-   live command line. The Thread it / Stop bar sticks to the bottom of the settings window.
-4. Examples: the 300 / 800 / 1,500 / 2,208 progression as tilted windows, then other looks.
-5. How it works: METHOD.TXT, the second half folded.
-6. For developers: terminal windows with Copy buttons, then FLAGS.CSV (cards on phones).
-7. Footer: one window over a checkerboard floor.
+1. Header: wordmark, small-caps links divided by pegs, a peg rule below.
+2. Hero: the halo behind the wordmark, an italic lede, the trust line, Make yours; the portrait in a
+   small arched mount.
+3. Studio: the canvas in an arched mount (sticky on desktop) beside one Settings frame in three
+   numbered steps, with folded advanced settings and a Thread it / Stop bar pinned to its foot; then
+   Save, the live command line, and the Ledger.
+4. Examples: the 300 / 800 / 1,500 / 2,208 progression in arched mats, then other looks.
+5. How it works: one frame with a drop cap, the second half folded.
+6. For developers: a forest band of code frames with Copy buttons, then every flag (cards on phones).
+7. Footer: the strung fan, the wordmark, credits.
 
 ## Components
 
-- **Window:** `panel` body, 2px bevel (`#7a5ad0` / `#0a0320`), 8px hard black shadow, title bar in the
-  title gradient with DotGothic16 white text and decorative `_ □ ×` (aria-hidden).
-- **Primary button:** sun gradient, `void` text, 4px cyan hard shadow, presses down 3px.
-- **Secondary button:** `panel-2` with a bevel. Disabled: 45% opacity, dashed border, no shadow.
-- **Choices:** chips on `well` with a 2px `edge` border; checked is a `hot` border, tint and glow.
-- **Sliders:** cyan-to-magenta track, white peg thumb with a `hot` ring.
-- **Code:** `well` background, Copy button in the title bar copies the code text only.
+- **Frame:** vellum, a gilt double rule (`border` + inset shadows), curve-stitch corners top left and
+  right, a centred small-caps plaque between peg rules.
+- **Buttons:** leaf-shaped (`border-radius: 22px 4px`), 48px. Primary madder with vellum text;
+  secondary ink outline. Disabled: 45% opacity and a dashed border.
+- **Choices:** leaf chips with a muted outline; selected is sage with white text.
+- **Sliders:** a 1px ink thread with a gilt peg every tenth; the thumb is a madder peg ringed in vellum.
+- **Code:** forest frames with a gilt-light rule, Courier Prime in cream, a small-caps Copy button.
