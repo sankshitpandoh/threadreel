@@ -32,6 +32,7 @@ const usage = `Usage: threadreel -i input -o output [options]
   -t <sec>         use only the first N seconds of the video
   -intro <sec>     draw the first frame in over N seconds (default 0 for video, 6 for a still)
   -hold <sec>      hold the last frame for N seconds (default 0 for video, 2 for a still)
+  -all-lines       always lay down all -n lines instead of stopping when they stop helping
   -pegs-visible    draw the pegs
   -j <n>           worker threads (default: all cores)
   -seed <n>        random seed, for reproducible output
@@ -91,6 +92,7 @@ function parseArgs(argv) {
     }
     if (arg === 'v') { o.verbose = true; continue; }
     if (arg === 'pegs-visible') { o.showPegs = true; continue; }
+    if (arg === 'all-lines') { o.options.exhaust = true; continue; }
     if (value === undefined) value = argv[++i];
     if (value === undefined) fail(`flag -${arg} needs a value`);
     if (arg === 'i') o.input = value;

@@ -77,6 +77,13 @@ test('thread goes where the picture is dark', () => {
   assert.ok(left > right * 3, `left ${left} right ${right}`);
 });
 
+test('exhaust spends the whole line budget', () => {
+  const auto = new Threader({ pegs: 60, size: 64, lines: 3000, seed: 7 }).solve(discImage(64));
+  const all = new Threader({ pegs: 60, size: 64, lines: 3000, seed: 7, exhaust: true }).solve(discImage(64));
+  assert.ok(auto.segments < 3000);
+  assert.equal(all.segments, 3000);
+});
+
 test('seeded runs are reproducible, color mode uses three threads', () => {
   const a = new Threader({ pegs: 50, size: 48, seed: 11, mode: 'color' }).solve(discImage(48));
   const b = new Threader({ pegs: 50, size: 48, seed: 11, mode: 'color' }).solve(discImage(48));

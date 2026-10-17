@@ -9,6 +9,8 @@
 // weight along the line. A segment with average remaining m and weight w
 // changes the squared error by w(w - 2m) per pixel, so the search stops when
 // the best m drops below w/2 (plus minGain): no segment would help anymore.
+// With `exhaust` it keeps going until the line budget is spent, which is how
+// classic string art (and the original tool) works.
 
 import { prepareFrame, luminance, channel } from './image.js';
 import { LineTable } from './lines.js';
@@ -169,7 +171,9 @@ export class Threader {
     return s / line.length;
   }
 
+  // Below this average remaining, a segment does more harm than good.
   threshold() {
+    if (this.options.exhaust) return -Infinity;
     return this.frame.weight / 2 + this.options.minGain;
   }
 

@@ -10,6 +10,7 @@
 //   size        working resolution (longer side, in pixels) used by the search
 //   recent      a thread may not return to one of its last N pegs
 //   minGain     stop early once no segment improves the picture by this much (0 = exact break-even)
+//   exhaust     never stop early: always lay down all `lines` segments
 //   seed        random seed for tie-breaking, for reproducible output
 
 export const SHAPES = ['circle', 'ellipse', 'rectangle'];
@@ -27,6 +28,7 @@ export const DEFAULTS = Object.freeze({
   size: 128,
   recent: 20,
   minGain: 0,
+  exhaust: false,
   seed: undefined,
 });
 
@@ -44,6 +46,7 @@ export function normalizeOptions(options = {}) {
   o.opacity = clamp(Number(o.opacity), 0.005, 1);
   o.thickness = clamp(Number(o.thickness), 0.05, 100);
   o.minGain = Math.max(0, Number(o.minGain) || 0);
+  o.exhaust = Boolean(o.exhaust);
   return o;
 }
 
