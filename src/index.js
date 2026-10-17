@@ -3,7 +3,7 @@ export { LineTable, rasterizeLine } from './lines.js';
 export { layoutPegs, pegsTooClose } from './pegs.js';
 export { DEFAULTS, SHAPES, MODES, BACKGROUNDS, normalizeOptions, threadColors } from './options.js';
 export { Random } from './random.js';
-export { drawResult, rasterize, frameSize, segmentBudget, threadWidth, RENDER_DEFAULTS } from './render.js';
+export { drawResult, rasterize, frameSize, segmentBudget, threadWidth, threadLength, RENDER_DEFAULTS } from './render.js';
 export { toSVG, toInstructions } from './svg.js';
 export { buildTimeline } from './timeline.js';
 export { InlinePool, ThreadPool, solveFrames, createWorkerHandler } from './pool.js';

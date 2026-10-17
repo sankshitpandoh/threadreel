@@ -42,6 +42,23 @@ export function segmentBudget(result, upTo) {
   return counts.map((c) => Math.floor(c * f));
 }
 
+// Total length of thread in a frame, in units of the frame's longer side.
+// Multiply by the real size of the board to get metres of thread.
+export function threadLength(result, upTo = Infinity) {
+  const budget = segmentBudget(result, upTo);
+  const sx = result.aspect >= 1 ? 1 : result.aspect;
+  const sy = result.aspect >= 1 ? 1 / result.aspect : 1;
+  let total = 0;
+  result.threads.forEach((thread, t) => {
+    for (let i = 0; i < budget[t]; i++) {
+      const a = result.pegs[thread.pegs[i]];
+      const b = result.pegs[thread.pegs[i + 1]];
+      total += Math.hypot((a.x - b.x) * sx, (a.y - b.y) * sy);
+    }
+  });
+  return total;
+}
+
 export function drawResult(ctx, result, opts = {}) {
   const o = { ...RENDER_DEFAULTS, ...opts };
   const { width, height } = frameSize(result, o);

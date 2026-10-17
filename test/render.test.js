@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { Threader, rasterize, toSVG, toInstructions, buildTimeline, segmentBudget, frameSize } from '../src/index.js';
+import { Threader, rasterize, toSVG, toInstructions, buildTimeline, segmentBudget, frameSize, threadLength } from '../src/index.js';
 import { discImage } from './helpers.js';
 
 const result = new Threader({ pegs: 40, size: 48, seed: 5, lines: 60 }).solve(discImage(48));
@@ -57,4 +57,13 @@ test('buildTimeline draws in, plays, then holds', () => {
   assert.deepEqual(tl.slice(10, 15).map((s) => s.frame), [0, 1, 2, 3, 4]);
   assert.ok(tl.slice(15).every((s) => s.frame === 4 && s.upTo === Infinity));
   for (let i = 1; i < 10; i++) assert.ok(tl[i].upTo >= tl[i - 1].upTo);
+});
+
+test('threadLength sums the chords in units of the longer side', () => {
+  const square = { aspect: 1, pegs: [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 1, y: 1 }], threads: [{ pegs: [0, 1, 2] }] };
+  assert.equal(threadLength(square), 2);
+  assert.equal(threadLength(square, 1), 1);
+  const wide = { aspect: 2, pegs: [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 1, y: 1 }], threads: [{ pegs: [0, 1, 2] }] };
+  assert.equal(threadLength(wide), 1.5);
+  assert.ok(threadLength(result) > 60 * 0.5);
 });
