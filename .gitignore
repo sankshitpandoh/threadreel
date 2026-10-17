@@ -1,0 +1,8 @@
+node_modules/
+output/
+.claude/
+.DS_Store
+*.mp4
+*.webm
+*.mov
+!site/media/*

@@ -1,0 +1,40 @@
+{
+  "name": "threadreel",
+  "version": "0.1.0",
+  "description": "Turn any video into string art: pegs on a frame, one thread, thousands of straight lines per frame.",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./node": "./src/node/index.js",
+    "./web": "./src/web/index.js"
+  },
+  "bin": {
+    "threadreel": "bin/threadreel.js"
+  },
+  "files": [
+    "bin",
+    "src"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "demo": "npx --yes http-server@14.1.1 -c-1 -p 8080 ."
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "string-art",
+    "threading",
+    "video",
+    "art",
+    "canvas",
+    "webcodecs",
+    "petros-vrellis"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jpeg-js": "0.4.4",
+    "pngjs": "7.0.0"
+  }
+}
