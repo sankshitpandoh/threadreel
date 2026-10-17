@@ -1,4 +1,4 @@
-import { InlinePool, buildTimeline, drawResult, solveFrames, toSVG } from '../src/index.js';
+import { InlinePool, buildTimeline, drawResult, solveFrames, threadLength, toSVG } from '../src/index.js';
 import { canUseWebCodecs, downloadBlob, encodeVideo } from '../src/web/encode.js';
 import { extractFrames, imageFrame, isImageFile, isVideoFile, loadVideo } from '../src/web/frames.js';
 import { createWebPool } from '../src/web/pool.js';
@@ -25,13 +25,17 @@ const ui = {
   exportNote: $('export-note'),
   frames: $('s-frames'),
   lines: $('s-lines'),
+  thread: $('s-thread'),
   elapsed: $('s-time'),
-  speed: $('s-speed'),
+  playIcon: $('play-icon'),
   pegsVisible: $('pegs-visible'),
 };
 const ranges = ['pegs', 'lines', 'opacity', 'thickness', 'fps', 'duration', 'intro', 'quality', 'size'];
 
 const PREVIEW_SIZE = 720;
+const BOARD_METRES = 0.6; // the board the thread readout assumes
+const PAUSE_PATH = 'M1 1h3.5v10H1zM7.5 1H11v10H7.5z';
+const PLAY_PATH = 'M2 1l9 5-9 5z';
 const WORKERS = Math.max(1, Math.min(8, navigator.hardwareConcurrency || 4));
 const SAMPLE_VIDEO = pickSample();
 const SAMPLE_IMAGE = { url: new URL('media/monalisa.jpg', import.meta.url), name: 'Mona Lisa' };
@@ -106,12 +110,18 @@ function describe(done) {
   const s = state.settings || readSettings();
   const n = state.results.filter(Boolean).length;
   const avg = averageLines();
-  const thread = { 'mono-white': 'black thread on white', 'mono-black': 'white thread on black', 'color-white': 'three colours on white', 'color-black': 'three colours on black' }[`${s.mode}-${s.background}`];
+  const thread = { 'mono-white': 'black thread on white', 'mono-black': 'white thread on black', 'color-white': 'cyan, magenta and yellow on white', 'color-black': 'red, green and blue on black' }[`${s.mode}-${s.background}`];
   const name = state.source ? `“${state.source.name}”` : 'Nothing';
   if (state.source && state.source.kind === 'image') {
-    return `${name} in ${avg.toLocaleString()} lines of ${thread}, ${s.pegs} pegs${done ? ', drawing itself in.' : ' so far.'}`;
+    return `${name}: ${avg.toLocaleString()} lines of ${thread} around ${s.pegs} pegs${done ? ', drawing itself in.' : ' so far.'}`;
   }
-  return `${name} in ${n} frames of about ${avg.toLocaleString()} lines each, ${thread}, ${s.pegs} pegs, ${state.fps} fps${done ? '.' : ' so far.'}`;
+  return `${name}: ${n} frames of about ${avg.toLocaleString()} lines each, ${thread} around ${s.pegs} pegs, ${state.fps} frames a second${done ? '.' : ' so far.'}`;
+}
+
+function averageThread() {
+  const done = state.results.filter(Boolean);
+  if (!done.length) return 0;
+  return done.reduce((a, r) => a + threadLength(r), 0) / done.length;
 }
 
 function averageLines() {
@@ -135,7 +145,7 @@ async function useFile(blob, name) {
   const source = { kind, name, url, blob };
   try {
     if (kind === 'video') {
-      setCaption('Opening the clip…');
+      setCaption('Opening the clip.');
       source.video = await loadVideo(url);
       source.aspect = source.video.videoWidth / source.video.videoHeight;
       ui.original.src = url;
@@ -163,7 +173,7 @@ async function useFile(blob, name) {
 }
 
 async function useSample(sample) {
-  setCaption('Fetching the sample…');
+  setCaption('Fetching the sample.');
   try {
     const blob = await fetch(sample.url).then((r) => {
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
@@ -210,7 +220,7 @@ async function gatherFrames(settings, signal) {
       onFrame: (frame, i, count) => {
         frames.push(frame);
         if (i % 5 === 0 || i === count - 1) {
-          setCaption(`Reading frame ${i + 1} of ${count}…`);
+          setCaption(`Reading frame ${i + 1} of ${count}.`);
           ui.frames.textContent = `${i + 1} / ${count}`;
         }
       },
@@ -238,7 +248,7 @@ async function start() {
   state.abort = abort;
   state.startedAt = performance.now();
   ui.lines.textContent = '–';
-  ui.speed.textContent = '–';
+  ui.thread.textContent = '–';
   ui.elapsed.textContent = '–';
 
   let frames;
@@ -267,7 +277,7 @@ async function start() {
   state.results = new Array(frames.length).fill(null);
   const t0 = performance.now();
   let shown = -1;
-  setCaption(frames.length > 1 ? `Threading ${frames.length} frames…` : 'Threading the picture…');
+  setCaption(frames.length > 1 ? `Threading ${frames.length} frames.` : 'Threading the picture.');
   try {
     await solveFrames(pool, frames, (result, i, done, total) => {
       if (abort.signal.aborted) return;
@@ -275,8 +285,8 @@ async function start() {
       const elapsed = (performance.now() - t0) / 1000;
       ui.frames.textContent = `${done} / ${total}`;
       ui.lines.textContent = averageLines().toLocaleString();
-      ui.elapsed.textContent = `${elapsed.toFixed(1)}s`;
-      ui.speed.textContent = (done / elapsed).toFixed(1);
+      ui.thread.textContent = `${Math.round(averageThread() * BOARD_METRES).toLocaleString()} m`;
+      ui.elapsed.textContent = elapsed.toFixed(1);
       if (i > shown) {
         shown = i;
         paintResult(result, Infinity, settings);
@@ -372,7 +382,7 @@ let playToken = 0;
 function play(from = state.step) {
   if (!state.timeline.length) return;
   state.playing = true;
-  ui.play.textContent = '❚❚';
+  ui.playIcon.firstElementChild.setAttribute('d', PAUSE_PATH);
   ui.play.setAttribute('aria-label', 'Pause');
   const token = ++playToken;
   const t0 = performance.now() - (from / state.fps) * 1000;
@@ -389,7 +399,7 @@ function play(from = state.step) {
 
 function pause() {
   state.playing = false;
-  ui.play.textContent = '▶';
+  ui.playIcon.firstElementChild.setAttribute('d', PLAY_PATH);
   ui.play.setAttribute('aria-label', 'Play');
 }
 
@@ -425,7 +435,7 @@ ui.saveVideo.addEventListener('click', async () => {
   const timeline = state.timeline;
   ui.saveVideo.disabled = true;
   const webcodecs = canUseWebCodecs();
-  setNote(webcodecs ? 'Encoding…' : 'Recording in real time (this browser has no WebCodecs)…');
+  setNote(webcodecs ? 'Encoding.' : 'Recording in real time, since this browser has no WebCodecs.');
   try {
     const out = await encodeVideo({
       width,
@@ -437,7 +447,7 @@ ui.saveVideo.addEventListener('click', async () => {
         const step = timeline[i];
         drawResult(ctx, results[step.frame], { width, height, upTo: step.upTo, showPegs: settings.showPegs });
       },
-      onProgress: (p) => setNote(`${webcodecs ? 'Encoding' : 'Recording'} ${Math.round(p * 100)}%…`),
+      onProgress: (p) => setNote(`${webcodecs ? 'Encoding' : 'Recording'}, ${Math.round(p * 100)}%.`),
     });
     downloadBlob(out.blob, `${fileStem()}-threads.${out.ext}`);
     setNote(`Saved a ${(out.blob.size / 1e6).toFixed(1)} MB ${out.ext.toUpperCase()} at ${width}×${height}, ${state.fps} fps.`);

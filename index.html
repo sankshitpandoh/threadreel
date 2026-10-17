@@ -3,70 +3,43 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Threadreel</title>
+  <title>threadreel</title>
   <meta name="description" content="Turn any video into string art, in your browser. Pegs on a frame, one thread, thousands of straight lines per frame." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="site/style.css" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='none' stroke='%23c4432b' stroke-width='2'/%3E%3Cpath d='M5 10 27 20M4 18 28 12M9 27 23 4M12 4 20 28' stroke='%23c4432b' stroke-width='1.2'/%3E%3C/svg%3E" />
+  <!-- avoid-ai-design-ignore: K7 (focus-visible styles are in site/style.css) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23fff'/%3E%3Cpath d='M3 9 29 21M2 20 30 12M8 29 24 3M12 3 20 29M4 4l24 24M4 28 28 4' stroke='%23000' stroke-width='1.4'/%3E%3C/svg%3E" />
 </head>
 <body>
-  <header class="masthead wrap">
-    <div class="masthead-meta">
-      <span>No. 02</span>
-      <span class="hide-sm">An instrument for reducing moving pictures to a single thread</span>
-      <span>Free &amp; open source</span>
-    </div>
-    <h1 class="wordmark"><a href="./">Threadreel</a></h1>
-    <nav class="masthead-nav" aria-label="Sections">
-      <a href="#studio">The Studio</a>
-      <a href="#method">The Method</a>
-      <a href="#reference">Reference</a>
-      <a href="https://github.com/sankshitpandoh/threadreel">Source&nbsp;↗</a>
+  <header class="header">
+    <h1 class="wordmark display"><a href="./">threadreel</a></h1>
+    <p class="header-line">Pegs around a frame, one thread, thousands of straight lines. For every frame of your video.</p>
+    <nav class="header-nav" aria-label="Sections">
+      <a href="#studio">Studio</a>
+      <a href="#method">How it works</a>
+      <a href="#reference">Command line</a>
+      <a href="https://github.com/sankshitpandoh/threadreel">GitHub</a>
     </nav>
   </header>
 
   <main>
-    <section class="lede wrap">
-      <p class="kicker">The Front Page</p>
-      <h2 class="headline">Every frame of your video, strung from one thread.</h2>
-      <div class="standfirst">
-        <p>Give Threadreel a clip and it hammers a ring of pegs around each frame, then runs a single
-          thread from peg to peg in straight lines, thousands of times, until the picture appears.
-          Play the frames back and the thread moves.</p>
-        <p class="byline">After the string-art pieces of Petros Vrellis and Jérémie Piellard's
-          <a href="https://github.com/piellardj/image-stylization-threading"><i>image-stylization-threading</i></a>.
-          Runs entirely in your browser; nothing is uploaded.</p>
-        <p class="lede-actions">
-          <a class="button primary gh-button" href="https://github.com/sankshitpandoh/threadreel"><svg class="gh-mark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>View on GitHub<span class="arrow" aria-hidden="true">↗</span></a>
-          <a class="lede-link" href="#studio">Or try it below ↓</a>
-        </p>
-      </div>
-    </section>
-
-    <section id="studio" class="studio wrap" aria-labelledby="studio-title">
-      <div class="section-head">
-        <span class="section-no">I.</span>
-        <h2 id="studio-title">The Studio</h2>
-        <span class="section-note">Drop in a video or a picture of your own, or watch the sample.</span>
-      </div>
-
+    <section id="studio" class="studio wrap" aria-label="Studio">
       <div class="studio-grid">
         <figure class="plate" id="plate">
           <div class="plate-frame" id="drop">
-            <canvas id="canvas" width="720" height="720" aria-label="Threadreel rendering"></canvas>
-            <div class="drop-hint" id="drop-hint">Release to use this clip</div>
+            <canvas id="canvas" width="720" height="720" aria-label="The strung picture"></canvas>
+            <div class="drop-hint" id="drop-hint">Drop to use this file</div>
           </div>
           <div class="transport" id="transport" hidden>
-            <button type="button" class="transport-button" id="play" aria-label="Pause">❚❚</button>
+            <button type="button" class="transport-button" id="play" aria-label="Pause">
+              <svg id="play-icon" viewBox="0 0 12 12" aria-hidden="true"><path d="M1 1h3.5v10H1zM7.5 1H11v10H7.5z"/></svg>
+            </button>
             <input type="range" id="scrub" min="0" max="0" value="0" step="1" aria-label="Frame" />
-            <span class="transport-time" id="time">0:00</span>
+            <span class="transport-time" id="time">0:00.0</span>
           </div>
-          <figcaption>
-            <span class="plate-no">Plate I.</span>
-            <span id="caption">Preparing the sample…</span>
-          </figcaption>
+          <figcaption id="caption">Fetching the sample clip.</figcaption>
         </figure>
 
         <aside class="controls" aria-label="Settings">
@@ -79,7 +52,7 @@
             <div class="source-actions">
               <label class="link-button">
                 <input type="file" id="file" accept="video/*,image/*" />
-                Choose a video or picture…
+                Choose a video or picture
               </label>
               <button type="button" class="link-button" id="sample">Use the sample clip</button>
               <button type="button" class="link-button" id="sample-image">Use the sample picture</button>
@@ -88,20 +61,20 @@
 
           <fieldset class="field">
             <legend>Frame</legend>
-            <div class="shape-list" id="shape">
-              <label><input type="radio" name="shape" value="circle" checked /><span class="n">01</span>Circle</label>
-              <label><input type="radio" name="shape" value="ellipse" /><span class="n">02</span>Ellipse</label>
-              <label><input type="radio" name="shape" value="rectangle" /><span class="n">03</span>Rectangle</label>
+            <div class="choice-list" id="shape">
+              <label><input type="radio" name="shape" value="circle" checked />Circle</label>
+              <label><input type="radio" name="shape" value="ellipse" />Ellipse</label>
+              <label><input type="radio" name="shape" value="rectangle" />Rectangle</label>
             </div>
           </fieldset>
 
           <fieldset class="field">
             <legend>Thread</legend>
-            <div class="shape-list" id="thread">
-              <label><input type="radio" name="thread" value="mono-white" checked /><span class="n">01</span>Black on white</label>
-              <label><input type="radio" name="thread" value="mono-black" /><span class="n">02</span>White on black</label>
-              <label><input type="radio" name="thread" value="color-white" /><span class="n">03</span>Three colours on white</label>
-              <label><input type="radio" name="thread" value="color-black" /><span class="n">04</span>Three colours on black</label>
+            <div class="choice-list single" id="thread">
+              <label><input type="radio" name="thread" value="mono-white" checked />Black on white</label>
+              <label><input type="radio" name="thread" value="mono-black" />White on black</label>
+              <label><input type="radio" name="thread" value="color-white" />Cyan, magenta and yellow on white</label>
+              <label><input type="radio" name="thread" value="color-black" />Red, green and blue on black</label>
             </div>
           </fieldset>
 
@@ -146,7 +119,7 @@
             <input type="range" id="quality" min="64" max="256" step="32" value="128" />
           </div>
           <div class="field check">
-            <label><input type="checkbox" id="pegs-visible" /> Show the pegs</label>
+            <label><input type="checkbox" id="pegs-visible" />Show the pegs</label>
           </div>
 
           <div class="actions">
@@ -156,10 +129,12 @@
 
           <dl class="ledger" aria-live="polite">
             <div><dt>Frames</dt><dd id="s-frames">0</dd></div>
-            <div><dt>Lines / frame</dt><dd id="s-lines">–</dd></div>
-            <div><dt>Elapsed</dt><dd id="s-time">–</dd></div>
-            <div><dt>Frames / sec.</dt><dd id="s-speed">–</dd></div>
+            <div><dt>Lines per frame</dt><dd id="s-lines">–</dd></div>
+            <div><dt>Thread per frame</dt><dd id="s-thread">–</dd></div>
+            <div><dt>Seconds taken</dt><dd id="s-time">–</dd></div>
           </dl>
+
+          <p class="ledger-note">Thread length assumes a 60 cm board.</p>
 
           <p class="exports">
             Save as <button type="button" class="link-button" id="save-video" disabled>video</button>,
@@ -171,74 +146,59 @@
             <output id="size-out" for="size"></output>
             <input type="range" id="size" min="360" max="1440" step="120" value="720" />
           </div>
-          <p class="exports note" id="export-note"></p>
+          <p class="export-note" id="export-note"></p>
         </aside>
       </div>
     </section>
 
     <section id="method" class="method wrap" aria-labelledby="method-title">
-      <div class="section-head">
-        <span class="section-no">II.</span>
-        <h2 id="method-title">The Method</h2>
-        <span class="section-note">How a frame becomes a few thousand straight lines.</span>
-      </div>
-
-      <div class="essay">
-        <p class="dropcap">A string artist has only one move: run the thread from the peg they are at to some
-          other peg, in a straight line. Threadreel plays that game greedily. It keeps a small copy of
-          the frame in which every pixel records how much darker it still needs to be. From the current
-          peg it considers every other peg, averages the remaining darkness along each possible line, and
-          goes to the peg whose line crosses the most of it. Then it subtracts the thread's weight along
-          that line and asks again.</p>
-        <p>Lines must be straight and must end on pegs, so the thread cannot simply trace an outline. It
-          crosses the whole frame, every time, and the picture emerges from where the crossings pile
-          up: dense in the shadows, sparse in the light. That is also why a circle works so well. Every
-          chord of a circle passes through the middle, where the subject usually is.</p>
-        <blockquote class="pull">Thousands of chords, none of them drawn where the picture is; all of them
-          drawn through it.</blockquote>
-        <p>The search knows when to stop. A line whose average remaining darkness is less than half the
-          thread's weight would make the frame worse, not better, so once no such line is left the frame
-          is finished. Bright frames use fewer lines, dark ones more, and the slider for lines is only a
-          ceiling. Opacity and thickness set how heavy each pass of thread is, and so how many passes a
-          frame needs.</p>
-        <p>A video is nothing but many frames, so each one is solved on its own, spread across every core
-          of your machine in Web Workers. The lines between pegs are rasterised once and shared by all
-          frames of a clip, which leaves each step with nothing to do but sum a few hundred short lists
-          of pixels. Frames come out as geometry, not pixels: a list of peg numbers per thread. They are
-          drawn again at any size for playback, for a PNG or SVG, or for the video file, which is encoded
-          right in the browser with WebCodecs.</p>
-      </div>
-
-      <div class="progression" id="progression">
-        <figure><img src="examples/monalisa-300.jpg" alt="The Mona Lisa after 300 lines of thread" loading="lazy" /><figcaption><b>300</b> lines</figcaption></figure>
-        <figure><img src="examples/monalisa-800.jpg" alt="The Mona Lisa after 800 lines of thread" loading="lazy" /><figcaption><b>800</b> lines</figcaption></figure>
-        <figure><img src="examples/monalisa-1500.jpg" alt="The Mona Lisa after 1500 lines of thread" loading="lazy" /><figcaption><b>1500</b> lines</figcaption></figure>
-        <figure><img src="examples/monalisa.jpg" alt="The Mona Lisa when the search stops, about 2200 lines" loading="lazy" /><figcaption><b>Finished</b></figcaption></figure>
-        <p class="fig-note"><span class="plate-no">Fig. 1.</span> The same portrait at four stages. The first
-          lines carve out the darkest masses; the face only settles once the thread has nowhere large left to go.</p>
+      <h2 id="method-title" class="section-title display">How a frame becomes a few thousand straight lines</h2>
+      <div class="method-grid">
+        <div class="prose">
+          <p>A string artist has only one move: run the thread from the peg they are at to some other peg, in a
+            straight line. threadreel plays that game greedily. It keeps a small copy of the frame in which every
+            pixel records how much darker it still needs to be. From the current peg it considers every other
+            peg, averages the remaining darkness along each possible line, and goes to the peg whose line crosses
+            the most of it. Then it subtracts the thread's weight along that line and asks again.</p>
+          <p>Lines must be straight and must end on pegs, so the thread cannot trace an outline. It crosses the
+            whole frame every time, and the picture emerges from where the crossings pile up: dense in the
+            shadows, sparse in the light. That is also why a circle works so well. Every chord of a circle passes
+            through the middle, where the subject usually is.</p>
+          <p>The search knows when to stop. A line whose average remaining darkness is less than half the thread's
+            weight would make the frame worse, so once no such line is left the frame is finished. Bright frames
+            use fewer lines, dark ones more; the slider for lines is only a ceiling. Opacity and thickness set how
+            heavy each pass of thread is, and so how many passes a frame needs.</p>
+          <p>A video is many frames, so each one is solved on its own, spread across every core of your machine in
+            Web Workers. The lines between pegs are rasterised once and shared by all frames of a clip, which
+            leaves each step with nothing to do but sum a few hundred short lists of pixels. Frames come out as
+            geometry, a list of peg numbers per thread, and are drawn again at any size for playback, for a PNG or
+            SVG, or for the video file, which is encoded in the browser with WebCodecs. Nothing is uploaded.</p>
+        </div>
+        <div class="progression" aria-label="The same portrait at four stages">
+          <figure><img src="examples/monalisa-300.jpg" alt="The Mona Lisa after 300 lines of thread" loading="lazy" /><figcaption><b>300</b> lines</figcaption></figure>
+          <figure><img src="examples/monalisa-800.jpg" alt="The Mona Lisa after 800 lines of thread" loading="lazy" /><figcaption><b>800</b> lines</figcaption></figure>
+          <figure><img src="examples/monalisa-1500.jpg" alt="The Mona Lisa after 1500 lines of thread" loading="lazy" /><figcaption><b>1,500</b> lines</figcaption></figure>
+          <figure><img src="examples/monalisa.jpg" alt="The Mona Lisa when the search stops, about 2200 lines" loading="lazy" /><figcaption><b>2,208</b> lines, where the search stopped</figcaption></figure>
+          <p class="fig-note">The first lines carve out the darkest masses. The face only settles once the thread has nowhere large left to go.</p>
+        </div>
       </div>
     </section>
 
     <section id="reference" class="reference wrap" aria-labelledby="reference-title">
-      <div class="section-head">
-        <span class="section-no">III.</span>
-        <h2 id="reference-title">Reference</h2>
-        <span class="section-note">For the command line and for your own code.</span>
-      </div>
-
+      <h2 id="reference-title" class="section-title display">On the command line and in your own code</h2>
       <div class="ref-grid">
         <div class="ref-intro">
-          <h3>Installation</h3>
-          <p>Threadreel needs Node 18 or newer, and ffmpeg on the PATH for video files. Pictures need nothing else.</p>
+          <h3 class="display">Install</h3>
+          <p>Node 18 or newer, and ffmpeg on the PATH for video files. Pictures need nothing else.</p>
 <pre><code>git clone https://github.com/sankshitpandoh/threadreel
 cd threadreel &amp;&amp; npm install &amp;&amp; npm link
 
 threadreel -i clip.mp4 -o clip-threads.mp4
 threadreel -i photo.jpg -o photo.svg</code></pre>
-          <h3>A still that draws itself</h3>
-          <p>Give a picture and ask for a video: the thread is laid down one line at a time over six seconds, then held.</p>
+          <h3 class="display">A still that draws itself</h3>
+          <p>Give a picture and ask for a video: the thread is laid down one line at a time, then held.</p>
 <pre><code>threadreel -i photo.jpg -o photo.mp4 -intro 8 -hold 3</code></pre>
-          <h3>As a library</h3>
+          <h3 class="display">As a library</h3>
 <pre><code>import { Threader, rasterize, toSVG } from 'threadreel';
 
 const threader = new Threader({ shape: 'circle', pegs: 240 });
@@ -247,40 +207,41 @@ const png = rasterize(result, { width: 1080 });
 const svg = toSVG(result, { width: 1080 });</code></pre>
         </div>
 
-        <dl class="flags">
-          <div><dt>-i <var>path</var></dt><dd>A picture (PNG, JPEG) or any video ffmpeg can read.</dd></div>
-          <div><dt>-o <var>path</var></dt><dd>Where to write it: <code>.mp4</code> <code>.webm</code> <code>.gif</code> for video, <code>.png</code> <code>.jpg</code> <code>.svg</code> for one frame, <code>.txt</code> for stringing instructions, <code>%04d.png</code> for every frame. Repeatable.</dd></div>
-          <div><dt>-shape <var>s</var></dt><dd><code>circle</code> (square crop), <code>ellipse</code> or <code>rectangle</code>. Default circle.</dd></div>
-          <div><dt>-p <var>n</var></dt><dd>Pegs around the frame. Default 240.</dd></div>
-          <div><dt>-n <var>n</var></dt><dd>Most lines per frame; the search usually stops earlier by itself. Default 2500.</dd></div>
-          <div><dt>-mode <var>m</var></dt><dd><code>mono</code> for one thread, <code>color</code> for cyan, magenta and yellow (or red, green and blue on black).</dd></div>
-          <div><dt>-bg <var>b</var></dt><dd><code>white</code> with a dark thread, or <code>black</code> with a light one.</dd></div>
-          <div><dt>-opacity <var>x</var></dt><dd>How much one pass of thread covers, 0 to 1. Default 0.3.</dd></div>
-          <div><dt>-thickness <var>x</var></dt><dd>Thread width in thousandths of the frame. Default 1.</dd></div>
-          <div><dt>-q <var>px</var></dt><dd>Working resolution for the search. Default 128.</dd></div>
-          <div><dt>-s <var>px</var></dt><dd>Output size, longer side. Default 1080.</dd></div>
-          <div><dt>-fps <var>n</var></dt><dd>Frames per second to take from the video. Default 12.</dd></div>
-          <div><dt>-t <var>sec</var></dt><dd>Use only the first <var>sec</var> seconds.</dd></div>
-          <div><dt>-intro, -hold <var>sec</var></dt><dd>Draw the first frame in, hold the last. Defaults 0 for video, 6 and 2 for a still.</dd></div>
-          <div><dt>-pegs-visible</dt><dd>Draw the pegs in red.</dd></div>
-          <div><dt>-j <var>n</var></dt><dd>Worker threads. Defaults to every core.</dd></div>
-          <div><dt>-seed <var>n</var></dt><dd>Fix the random tie-breaks to repeat a result exactly.</dd></div>
-          <div><dt>-v</dt><dd>Report progress.</dd></div>
-        </dl>
+        <table class="flags">
+          <thead><tr><th>Flag</th><th>Default</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><th>-i <var>path</var></th><td class="default"></td><td>A picture (PNG, JPEG) or any video ffmpeg can read.</td></tr>
+            <tr><th>-o <var>path</var></th><td class="default"></td><td>Where to write it, by extension: <code>.mp4</code> <code>.webm</code> <code>.gif</code> for video, <code>.png</code> <code>.jpg</code> <code>.svg</code> for one frame, <code>.txt</code> for stringing instructions, <code>%04d.png</code> for every frame. Repeatable.</td></tr>
+            <tr><th>-shape <var>s</var></th><td class="default">circle</td><td><code>circle</code> (square crop), <code>ellipse</code> or <code>rectangle</code>.</td></tr>
+            <tr><th>-p <var>n</var></th><td class="default">240</td><td>Pegs around the frame.</td></tr>
+            <tr><th>-n <var>n</var></th><td class="default">2500</td><td>Most lines per frame; the search usually stops earlier by itself.</td></tr>
+            <tr><th>-mode <var>m</var></th><td class="default">mono</td><td><code>mono</code> for one thread, <code>color</code> for cyan, magenta and yellow (red, green and blue on black).</td></tr>
+            <tr><th>-bg <var>b</var></th><td class="default">white</td><td><code>white</code> with a dark thread, or <code>black</code> with a light one.</td></tr>
+            <tr><th>-opacity <var>x</var></th><td class="default">0.3</td><td>How much one pass of thread covers, 0 to 1.</td></tr>
+            <tr><th>-thickness <var>x</var></th><td class="default">1</td><td>Thread width in thousandths of the frame.</td></tr>
+            <tr><th>-q <var>px</var></th><td class="default">128</td><td>Working resolution for the search.</td></tr>
+            <tr><th>-s <var>px</var></th><td class="default">1080</td><td>Output size, longer side.</td></tr>
+            <tr><th>-fps <var>n</var></th><td class="default">12</td><td>Frames per second to take from the video.</td></tr>
+            <tr><th>-t <var>sec</var></th><td class="default">all</td><td>Use only the first <var>sec</var> seconds.</td></tr>
+            <tr><th>-intro, -hold <var>sec</var></th><td class="default">0 / 6, 0 / 2</td><td>Draw the first frame in, hold the last. The second value applies to a still.</td></tr>
+            <tr><th>-pegs-visible</th><td class="default">off</td><td>Draw the pegs.</td></tr>
+            <tr><th>-j <var>n</var></th><td class="default">all cores</td><td>Worker threads.</td></tr>
+            <tr><th>-seed <var>n</var></th><td class="default">random</td><td>Fix the random tie-breaks to repeat a result exactly.</td></tr>
+            <tr><th>-v</th><td class="default">off</td><td>Report progress.</td></tr>
+          </tbody>
+        </table>
       </div>
     </section>
   </main>
 
-  <footer class="colophon wrap">
-    <p><span class="kicker">Colophon</span> The string-art method was popularised by
-      <a href="https://artof01.com/vrellis/works/knit.html">Petros Vrellis</a>; the search follows
-      <a href="https://github.com/piellardj/image-stylization-threading">Jérémie Piellard's</a> tool for
-      still pictures, rewritten here for video by <a href="https://github.com/sankshitpandoh">Sankshit Pandoh</a>
-      and published under the MIT licence. Video files are written with
-      <a href="https://github.com/Vanilagy/mp4-muxer">mp4-muxer</a> and <a href="https://github.com/Vanilagy/webm-muxer">webm-muxer</a>.
-      Set in Newsreader and IBM Plex Mono. The sample clip is from <i>Big Buck Bunny</i>, © Blender Foundation,
-      CC BY 3.0; the sample picture is Leonardo's <i>Mona Lisa</i>, in the public domain.</p>
-    <p class="colophon-links"><a class="button gh-button" href="https://github.com/sankshitpandoh/threadreel"><svg class="gh-mark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>View on GitHub<span class="arrow" aria-hidden="true">↗</span></a></p>
+  <footer class="footer wrap">
+    <p>The string-art method was popularised by <a href="https://artof01.com/vrellis/works/knit.html">Petros Vrellis</a>.
+      The search follows <a href="https://github.com/piellardj/image-stylization-threading">Jérémie Piellard's</a> tool for
+      still pictures, rewritten for video by <a href="https://github.com/sankshitpandoh">Sankshit Pandoh</a> and published under
+      the MIT licence. Video files are written with <a href="https://github.com/Vanilagy/mp4-muxer">mp4-muxer</a> and
+      <a href="https://github.com/Vanilagy/webm-muxer">webm-muxer</a>. Set in Archivo. The sample clip is from <i>Big Buck Bunny</i>,
+      © Blender Foundation, CC BY 3.0; the sample picture is Leonardo's <i>Mona Lisa</i>, in the public domain.</p>
+    <p><a class="button" href="https://github.com/sankshitpandoh/threadreel">Source on GitHub</a></p>
   </footer>
 
   <script type="module" src="site/studio.js"></script>
